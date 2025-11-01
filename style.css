@@ -1,0 +1,295 @@
+/*
+ * style.css
+ * BİZİM BÜYÜLÜ HİKAYEMİZ - TAM CSS DOSYASI
+ * ÇÖZÜM: Galeri 2 sütunlu, aynı boyutlu ve ortalanmış hale getirildi.
+ */
+
+/* ================================================= */
+/* 1. GENEL STİL VE TEMEL RENKLER (DARK THEME) */
+/* ================================================= */
+
+/* Tüm siteye yavaşça hareket eden yıldız/büyü partikülleri ekleyelim */
+.stars {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; overflow: hidden;
+}
+
+body {
+    background: #0D1026; 
+    color: #EAEAEA; 
+    font-family: 'IM Fell DWG Pica', serif;
+    margin: 0; padding: 0; line-height: 1.8;
+}
+
+/* Scrollbar'ı temaya uygun yapalım */
+body::-webkit-scrollbar { width: 12px; }
+body::-webkit-scrollbar-track { background: #1a1e33; }
+body::-webkit-scrollbar-thumb {
+    background-color: #ffd700; 
+    border-radius: 20px;
+    border: 3px solid #1a1e33;
+}
+
+/* YENİ ANİMASYONLAR */
+@keyframes fadeInDown {
+    0% { opacity: 0; transform: translateY(-50px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes quoteFadeIn {
+    0% { opacity: 0; } 
+    70% { opacity: 0; } 
+    100% { opacity: 1; } /* Hata burada düzeltildi: Tek 'opacity: 1;' */
+}
+
+.hogwarts-header {
+    background: rgba(0, 0, 0, 0.5); color: #FFD700; padding: 30px 0; text-align: center;
+    border-bottom: 3px solid #6a0dad; box-shadow: 0 5px 20px rgba(106, 0, 173, 0.5); 
+}
+
+.animated-header { animation: fadeInDown 1.5s ease-out; }
+
+.hogwarts-header .logo img {
+    width: 120px; height: 120px; object-fit: cover; border-radius: 50%;
+    border: 5px solid #FFD700; box-shadow: 0 0 15px rgba(255, 215, 0, 0.7); margin-bottom: 10px;
+}
+
+.hogwarts-header h1 {
+    font-family: 'Cinzel Decorative', serif; font-size: 3.5em; margin: 10px 0 0;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5); 
+}
+.quote-fade-in { animation: quoteFadeIn 3s ease-out; }
+
+.main-content {
+    max-width: 1000px; margin: 40px auto; padding: 25px;
+    background-color: rgba(15, 20, 40, 0.95); 
+    border: 1px solid #6a0dad; border-radius: 12px;
+    box-shadow: 0 0 30px rgba(106, 0, 173, 0.5);
+}
+
+section { padding: 50px 0; border-bottom: 1px dashed #3a3f5b; text-align: center; }
+
+h2 {
+    font-family: 'Cinzel Decorative', serif; font-size: 2.5em; color: #9370DB;
+    margin-bottom: 30px; text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); position: relative;
+}
+
+/* ================================================= */
+/* 2. BÜYÜ BUTONU VE EFEKTLER */
+/* ================================================= */
+
+@keyframes wand-glow {
+    0% { box-shadow: 0 0 5px #fff; }
+    50% { box-shadow: 0 0 15px #ADD8E6, 0 0 30px #ADD8E6; }
+    100% { box-shadow: 0 0 5px #fff; }
+}
+#wand {
+    width: 80px; height: auto; transition: transform 0.5s ease-in-out;
+    animation: wand-glow 3s infinite alternate;
+}
+
+.magic-button {
+    background-color: #800080; color: #FFD700; padding: 15px 30px; border: 2px solid #FFD700;
+    border-radius: 5px; font-size: 1.2em; cursor: pointer; margin-top: 20px;
+    transition: all 0.3s ease; box-shadow: 0 0 10px #800080;
+}
+
+.magic-button:hover {
+    background-color: #9370DB; color: black; box-shadow: 0 0 20px #9370DB;
+}
+
+.magic-effect {
+    width: 0; height: 0; background-color: transparent; border-radius: 50%;
+    position: absolute; transform: translate(-50%, -50%); opacity: 0;
+    transition: all 0.5s ease-out;
+}
+
+@keyframes pulse {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+}
+
+.magic-effect.active {
+    width: 100px; height: 100px;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 20px #ADD8E6, 0 0 50px #ADD8E6; 
+    opacity: 1; animation: pulse 1s forwards;
+}
+
+.hidden-message {
+    margin-top: 30px; padding: 20px; background-color: rgba(255, 255, 255, 0.1); 
+    border: 3px dashed #FFD700; border-radius: 8px; font-size: 1.1em; font-style: italic;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); color: #EAEAEA; 
+    opacity: 0; max-height: 0; overflow: hidden;
+    transition: opacity 1s ease-in-out, max-height 1s ease-in-out;
+}
+
+.hidden-message.visible { opacity: 1; max-height: 500px; }
+
+
+/* ================================================= */
+/* 3. ÇAPULCU HARİTASI (Milestone) Kartları */
+/* ================================================= */
+
+.marauder-map { padding: 30px 0; border-bottom: 1px dashed #3a3f5b; }
+
+.marauder-map-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    justify-content: center; gap: 25px; margin-top: 30px;
+}
+
+@keyframes mapReveal {
+    0% { opacity: 0; transform: scale(0.8) rotateX(-90deg); }
+    100% { opacity: 1; transform: scale(1) rotateX(0deg); }
+}
+
+.milestone-card {
+    background-color: rgba(255, 255, 255, 0.05); border: 1px solid #4a4d6e; border-radius: 15px;
+    padding: 20px; text-align: left; box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease; opacity: 0;
+}
+.map-reveal.show { animation: mapReveal 0.8s ease-out forwards; }
+
+
+.milestone-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(147, 112, 219, 0.8), 0 0 50px rgba(147, 112, 219, 0.3);
+}
+
+.milestone-card h3 {
+    color: #FFD700; font-size: 1.5em; display: flex; align-items: center; gap: 10px;
+    border-bottom: 1px solid #6a0dad; padding-bottom: 5px; margin-top: 0;
+}
+
+.milestone-card h3 img { width: 30px; height: auto; }
+
+/* ================================================= */
+/* 4. FOTOĞRAF GALERİSİ (ÇÖZÜM: İKİ SÜTUN ZORLAMA) */
+/* ================================================= */
+
+.gallery-section { padding-top: 50px; }
+
+/* Galeri ızgarası: İki fotoğrafı yan yana ZORLA getirir ve ortalar */
+.image-grid {
+    display: grid;
+    /* ÇÖZÜM: Geniş ekranlarda 2 sütunu zorlar, her sütun minimum 350px. */
+    grid-template-columns: repeat(2, minmax(350px, 1fr)); 
+    gap: 30px; 
+    margin: 30px auto; 
+    max-width: 900px; /* Geniş ekranlarda ortalama için yeterli alan */
+    padding: 0 15px;
+}
+
+/* HTML'de 'full-width-gallery' olsa bile bu ayarlar geçerlidir */
+.image-grid.full-width-gallery {
+    grid-template-columns: repeat(2, minmax(350px, 1fr)); 
+    max-width: 900px; 
+    margin: 30px auto;
+    gap: 30px;
+    padding: 0 15px;
+}
+
+
+/* Her bir fotoğrafın kapsayıcısı (AYNI BOYUT) */
+.memory-container {
+    position: relative; width: 100%; 
+    height: 350px; /* Sabit yükseklik, boyut eşitleme sağlar */
+    overflow: hidden; border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7); cursor: pointer;
+    opacity: 0; transition: opacity 1s ease-out, box-shadow 0.3s ease;
+}
+
+.gallery-item {
+    width: 100%; height: 100%; 
+    object-fit: cover; /* Fotoğrafı kutuya tam oturtur */
+    display: block;
+    transition: transform 0.4s ease, filter 0.4s ease;
+    filter: brightness(0.7);
+}
+
+@keyframes overlay-pulse {
+    0% { border-color: #6a0dad; }
+    50% { border-color: #ADD8E6; }
+    100% { border-color: #6a0dad; }
+}
+
+.magic-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(15, 20, 40, 0.85); color: #FFD700;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; padding: 10px; transition: opacity 0.4s ease; opacity: 1;
+    border: 3px solid #6a0dad; animation: overlay-pulse 3s infinite alternate;
+}
+
+.spell-title {
+    font-family: 'Cinzel Decorative', serif; font-size: 1.8em; 
+    text-shadow: 0 0 8px #FFD700, 0 0 15px rgba(255, 215, 0, 0.5); margin-bottom: 5px;
+}
+.memory-desc { font-size: 1em; color: #c0c0c0; font-style: italic; }
+
+.memory-container:hover .magic-overlay { opacity: 0; }
+.memory-container:hover .gallery-item {
+    transform: scale(1.05); filter: brightness(1);
+    box-shadow: 0 0 20px rgba(106, 0, 173, 0.9);
+}
+
+
+/* Footer */
+.hogwarts-footer {
+    background: rgba(0, 0, 0, 0.5); color: #ccc; text-align: center; padding: 20px 0;
+    margin-top: 40px; border-top: 3px solid #6a0dad; box-shadow: 0 -5px 20px rgba(106, 0, 173, 0.5);
+    font-family: sans-serif;
+}
+.always-text { color: #ADD8E6; font-size: 1.1em; text-shadow: 0 0 10px #ADD8E6; }
+
+/* ================================================= */
+/* 5. ARKA PLAN ANİMASYONU CSS'İ */
+/* ================================================= */
+
+.star {
+    position: absolute; background-color: #f7f7f7; border-radius: 50%;
+    animation: star-move linear infinite, star-blink 2s alternate infinite;
+}
+
+@keyframes star-move {
+    0% { transform: translateY(0) translateX(0); }
+    100% { transform: translateY(-100px) translateX(100px); }
+}
+
+@keyframes star-blink {
+    0% { opacity: 0.2; } 100% { opacity: 1; }
+}
+
+/* ================================================= */
+/* 6. RESPONSIVE TASARIM (GÜNCELLENMİŞ ÇÖZÜM) */
+/* ================================================= */
+
+/* Ekran 750px altına düştüğünde (dar ekranlar) galeri tek sütuna düşsün */
+@media (max-width: 750px) {
+    .image-grid {
+        grid-template-columns: 1fr; /* Tek sütun */
+        max-width: 450px; 
+        gap: 20px;
+    }
+    .memory-container {
+        height: 300px; 
+    }
+    
+    .hogwarts-header h1 {
+        font-size: 2.5em;
+    }
+
+    .main-content {
+        margin: 20px 10px;
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 2em;
+    }
+    
+    .marauder-map-grid {
+        grid-template-columns: 1fr;
+    }
+}
